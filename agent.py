@@ -50,7 +50,7 @@ def main():
         if "content" in message:
           
           # If this is the first update to content, add to logger
-          if feedback_content == "":
+          if work_content == "":
             print(f"\n\n> Response: \n")
 
           blurb = message["content"]
