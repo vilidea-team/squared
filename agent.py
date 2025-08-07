@@ -14,20 +14,29 @@ If it does get an A+ in all 3 categories it is critical that you just return the
 """
 
 
-working = True
-attempts = 0
 
-messages = []
+class Loop:
+  def __init__(self, model, prompt):
+    self.model = model
+    self.messages = [{"role": "user", "content": prompt}]
+    self.attempts = 0
+    self.working = True
 
+def run(self):
+  try:
+    while self.working:
+      self._loop()
+  except KeyboardInterrupt:
+    print("> Connection interrupted from key input")
 
-def loop():
-  
+def _loop(self):
+
   # Our main worker starts every round of feedback
-  work_stream = ollama.chat(model=args.model, messages=messages, think=True, stream=True)
+  work_stream = ollama.chat(model=self.model, messages=self.messages, think=True, stream=True)
   work_content = ""
   work_thinking = ""
 
-  print(f"\n\n> { attempts }: Thinking... \n")
+  print(f"\n\n> { self.attempts }: Thinking... \n")
 
   for chunk in work_stream:
     
@@ -40,7 +49,7 @@ def loop():
       
       # If this is the first update to content, add to logger
       if work_content == "":
-        print(f"\n\n> { attempts }: Response: \n")
+        print(f"\n\n> { self.attempts }: Response: \n")
 
       blurb = message["content"]
       print(blurb, end='', flush=True)
@@ -48,7 +57,7 @@ def loop():
 
 
   # Work round complete, add the message!
-  messages.append({"role": "assistant", "content": work_content})
+  self.messages.append({"role": "assistant", "content": work_content})
 
   print(f"\n> Beginning feedback...\n")
 
@@ -56,15 +65,15 @@ def loop():
   # 1st message is the original prompt
   # 2nd message is the work from this loop (aka the last message)
   # 3rd message is our feedback prompt
-  feedback_stream = ollama.chat(model=args.model, messages=[
-    messages[0],
-    messages[-1],
+  feedback_stream = ollama.chat(model=self.model, messages=[
+    self.messages[0],
+    self.messages[-1],
     {"role": "user", "content": feedback_prompt}
   ], think=True, stream=True)
   
   feedback_content = ""
 
-  print(f"\n\n> { attempts }: Thinking of feedback... \n")
+  print(f"\n\n> { self.attempts }: Thinking of feedback... \n")
   
   for chunk in feedback_stream:
     
@@ -77,19 +86,23 @@ def loop():
       
       # If this is the first update to content, add to logger
       if feedback_content == "":
-        print(f"\n\n> { attempts }: Response: \n")
+        print(f"\n\n> { self.attempts }: Response: \n")
 
       blurb = message["content"]
       print(blurb, end='', flush=True)
       feedback_content += blurb
 
-  attempts += 1
+  self.attempts += 1
   
-  print(f"\n> Loop complete - total attempts: { attempts } \n")
+  print(f"\n> Loop complete - total attempts: { self.attempts } \n")
   
   if feedback_content == "DONE":
     print("\n\n> SUCCESS! A valid answer has been given\n\n")
-    working = False
+    self.working = False
+
+
+
+
 
 
 def main():
@@ -100,15 +113,8 @@ def main():
   
   args = parser.parse_args()
   
-  messages.append({"role": "user", "content": args.prompt})
-  
-  try:
-    
-    while working:
-      loop()
-
-  except KeyboardInterrupt:
-    print("> Connection interrupted from key input")
+  job = Loop(args.model, args.prompt)
+  job.run()
 
 if __name__ == "__main__":
   main()
