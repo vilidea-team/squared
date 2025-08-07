@@ -15,6 +15,10 @@ If it does get an A+ in all 3 categories it is critical that you just return the
 Your job is not to micromanage and try to solve the problem, it is simply to provide concise, high quality feedback or determine it is DONE.
 """
 
+YELLOW = "\033[33m"
+GREY = "\033[38;5;236m"
+WHITE = "\033[37m"
+
 
 class Loop:
   
@@ -38,23 +42,23 @@ class Loop:
     work_content = ""
     work_thinking = ""
   
-    print(f"\n\n\033[33m> { self.attempts }: Work Thinking... \n")
+    print(f"\n\n{YELLOW}> { self.attempts }: Work Thinking... \n")
   
     for chunk in work_stream:
       
       message = chunk["message"]
       
       if "thinking" in message:
-        print(message["thinking"], end='', flush=True)
+        print(f"{GREY}{ message["thinking"] }", end='', flush=True)
       
       elif "content" in message:
         
         # If this is the first update to content, add to logger
         if work_content == "":
-          print(f"\n\n\033[33m> { self.attempts }: Work Response: \n")
+          print(f"\n\n{YELLOW}> { self.attempts }: Work Response: \n")
   
         blurb = message["content"]
-        print(blurb, end='', flush=True)
+        print(f"{WHITE}{ blurb }", end='', flush=True)
         work_content += blurb
   
   
@@ -74,30 +78,30 @@ class Loop:
     
     feedback_content = ""
   
-    print(f"\n\n\033[33m> { self.attempts }: Thinking of feedback... \n")
+    print(f"\n\n{YELLOW}> { self.attempts }: Thinking of feedback... \n")
     
     for chunk in feedback_stream:
       
       message = chunk["message"]
   
       if "thinking" in message:
-        print(f"\033[97m{ message["thinking"] }", end='', flush=True)
+        print(f"{GREY}{ message["thinking"] }", end='', flush=True)
         
       elif "content" in message:
         
         # If this is the first update to content, add to logger
         if feedback_content == "":
-          print(f"\n\n\033[33m> { self.attempts }: Feedback Response: \n")
+          print(f"\n\n{YELLOW}> { self.attempts }: Feedback Response: \n")
   
         blurb = message["content"]
-        print(blurb, end='', flush=True)
+        print(f"{WHITE}{ blurb }", end='', flush=True)
         feedback_content += blurb
 
     self.messages.append({"role": "user", "content": feedback_content})
     
     self.attempts += 1
     
-    print(f"\n\n\033[33m> Loop complete - total attempts: { self.attempts } \n")
+    print(f"\n\n{YELLOW}> Loop complete - total attempts: { self.attempts } \n")
     
     if feedback_content.strip().upper() == "DONE":
       print("\n\n> \033[92mSUCCESS! A valid answer has been given\n\n")
