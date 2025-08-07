@@ -41,17 +41,25 @@ def main():
       for chunk in work_stream:
         
         message = chunk["message"]
-        
+
+        print(f"\n\n> { attempts }: Thinking... \n")
+
         if "thinking" in message:
           print(message["thinking"], end='', flush=True)
           
         if "content" in message:
+          
+          # If this is the first update to content, add to logger
+          if feedback_content == "":
+            print(f"\n\n> Response: \n")
+
           blurb = message["content"]
           print(blurb, end='', flush=True)
           work_content += blurb
 
+
       # Work round complete, add the message!
-      messages.append({"role": "assistant", "content": content})
+      messages.append({"role": "assistant", "content": work_content})
 
       print(f"\n> Beginning feedback...\n")
 
@@ -70,11 +78,18 @@ def main():
       for chunk in work_stream:
         
         message = chunk["message"]
-        
+
+        print(f"\n\n> { attempts }: Thinking... \n")
+
         if "thinking" in message:
           print(message["thinking"], end='', flush=True)
           
         if "content" in message:
+          
+          # If this is the first update to content, add to logger
+          if feedback_content == "":
+            print(f"\n\n> Response: \n")
+
           blurb = message["content"]
           print(blurb, end='', flush=True)
           feedback_content += blurb
