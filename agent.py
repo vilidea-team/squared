@@ -16,7 +16,7 @@ Your job is not to micromanage and try to solve the problem, it is simply to pro
 """
 
 YELLOW = "\033[33m"
-GREY = "\033[38;5;236m"
+GREY = "\033[38;5;244m"
 WHITE = "\033[37m"
 
 
