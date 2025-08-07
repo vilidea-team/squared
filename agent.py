@@ -20,7 +20,7 @@ If it does get an A+ in all 3 categories it is critical that you just return the
 
 Your job is not to solve the problem, it is your job to provide concise, high quality feedback or (on if the answer is wonderful) determine it gets an A+ in all 3 categories.
 
-So, what do you think?
+So, what do you think? Imagine yourself as the recipient of this task, in the audience shoes, is it perfect?
 """
 
 YELLOW = "\033[33m"
