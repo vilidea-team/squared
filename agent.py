@@ -60,7 +60,7 @@ class Loop:
     # Work round complete, add the message!
     self.messages.append({"role": "assistant", "content": work_content})
   
-    print(f"\n> Beginning feedback...\n")
+    print(f"\n\n> Beginning feedback...")
   
     # Next get feedback on the work. 
     # 1st message is the original prompt
@@ -74,7 +74,7 @@ class Loop:
     
     feedback_content = ""
   
-    print(f"\n\n> { self.attempts }: Thinking of feedback... \n")
+    print(f"> { self.attempts }: Thinking of feedback... \n")
     
     for chunk in feedback_stream:
       
@@ -92,12 +92,14 @@ class Loop:
         blurb = message["content"]
         print(blurb, end='', flush=True)
         feedback_content += blurb
-  
+
+    self.messages.append({"role": "assistant", "content": feedback_content})
+    
     self.attempts += 1
     
     print(f"\n> Loop complete - total attempts: { self.attempts } \n")
     
-    if feedback_content == "DONE":
+    if feedback_content.strip().upper() == "DONE":
       print("\n\n> SUCCESS! A valid answer has been given\n\n")
       self.working = False
   
