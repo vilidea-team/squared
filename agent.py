@@ -75,9 +75,9 @@ def main():
       
       feedback_content = ""
 
-      print(f"\n\n> { attempts }: Thinking... \n")
+      print(f"\n\n> { attempts }: Thinking of feedback... \n")
       
-      for chunk in work_stream:
+      for chunk in feedback_stream:
         
         message = chunk["message"]
 
