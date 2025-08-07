@@ -38,11 +38,11 @@ def main():
       work_content = ""
       work_thinking = ""
 
+      print(f"\n\n> { attempts }: Thinking... \n")
+
       for chunk in work_stream:
         
         message = chunk["message"]
-
-        print(f"\n\n> { attempts }: Thinking... \n")
 
         if "thinking" in message:
           print(message["thinking"], end='', flush=True)
@@ -74,12 +74,12 @@ def main():
       ], think=True, stream=True)
       
       feedback_content = ""
+
+      print(f"\n\n> { attempts }: Thinking... \n")
       
       for chunk in work_stream:
         
         message = chunk["message"]
-
-        print(f"\n\n> { attempts }: Thinking... \n")
 
         if "thinking" in message:
           print(message["thinking"], end='', flush=True)
