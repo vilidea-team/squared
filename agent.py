@@ -11,7 +11,7 @@ def main():
   
   try:
     while True:
-      subprocess.run(["ollama", "run", args.model, "-p", args.prompt], check=True)
+      subprocess.run(["ollama", "run", args.model, args.prompt], check=True)
       print("\n— loop done; sleeping 1 s —\n")
       time.sleep(1)
   except KeyboardInterrupt:
