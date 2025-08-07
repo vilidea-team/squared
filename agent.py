@@ -3,16 +3,22 @@ import argparse, subprocess, time, ollama
 
 
 feedback_prompt = """
-Please decide if the above message acomplishes what I asked.
+Your job is to make something wonderful. You may never know the people you impact, you will likely never get applauded, or recognized, but you have a passion so deep to make something great. Please decide if the above answer fully accomplishes what we are making.
 
-To be acomplished it must get an A+ in the following 3 categories:
-1. SIMPLICITY: Is it too messy? complex? overwhelming?
-2. QUALITY: How well does it fit the given requirements?
+To be accomplished it must get an A+ in the following 3 categories:
+
+1. SIMPLICITY: Is it too messy? complex? overwhelming? 
+- An A+ in simplicity means the answer is >90% efficient in fixing the task request
+
+2. QUALITY: How well does it fit into the given requirements?
+- An A+ in quality means the answer meets >90% of all requirements of the original task request
+
 3. UNIQUENESS: How creative is it? Does it feel human?
+- An A+ in uniqueness means the answer is >90% likelihood to be an original thought someone might have. 
 
 If it does get an A+ in all 3 categories it is critical that you just return the word "DONE". If not, then you will need to provide why, here's how: first say something that was done nicely, then say what was done incorrectly. 
 
-Your job is not to micromanage and try to solve the problem, it is simply to provide concise, high quality feedback or determine it is DONE.
+Your job is not to micromanage and try to solve the problem, it is simply to provide concise, high quality feedback or determine it gets an A+ in all 3 categories.
 """
 
 YELLOW = "\033[33m"
