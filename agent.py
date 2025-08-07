@@ -16,9 +16,11 @@ To be finished it must get an A+ in the 3 categories, your job is to dive analiz
 3. UNIQUENESS: How creative is it? Does it feel human?
 - An A+ in uniqueness means the answer is >90% likelihood to be an original thought someone might have. 
 
-If it does get an A+ in all 3 categories it is critical that you just return the word "DONE". If not, then you will need to provide why, here's how: first say something that was done nicely, then say what was done incorrectly. 
+If it does get an A+ in all 3 categories it is critical that you just return the word "DONE". If not, then you will need to provide why, here's how: first say something that was done nicely, then say what was done incorrectly or not good enough.
 
-Your job is not to micromanage and try to solve the problem, it is simply to provide concise, high quality feedback or determine it gets an A+ in all 3 categories.
+Your job is not to solve the problem, it is your job to provide concise, high quality feedback or (on if the answer is wonderful) determine it gets an A+ in all 3 categories.
+
+So, what do you think?
 """
 
 YELLOW = "\033[33m"
