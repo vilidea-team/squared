@@ -3,9 +3,9 @@ import argparse, subprocess, time, ollama
 
 
 feedback_prompt = """
-Your job is to make something wonderful. You may never know the people you impact, you will likely never get applauded, or recognized, but you have a passion so deep to make something great. Please decide if the above answer fully accomplishes what we are making.
+Your job is to make something wonderful. You may never know the people you impact, you will likely never get applauded, or recognized, but you have a passion so deep to make something great. Please decide if the above answer fully accomplishes what we are making. 
 
-To be accomplished it must get an A+ in the following 3 categories:
+To be finished it must get an A+ in the 3 categories, your job is to dive analize the task at hand and then determine between F-A+ if each category is wonderful.
 
 1. SIMPLICITY: Is it too messy? complex? overwhelming? 
 - An A+ in simplicity means the answer is >90% efficient in fixing the task request
