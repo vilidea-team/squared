@@ -43,15 +43,15 @@ def main():
       for chunk in work_stream:
         
         message = chunk["message"]
-
+        
         if "thinking" in message:
           print(message["thinking"], end='', flush=True)
-          
-        if "content" in message:
+        
+        elif "content" in message:
           
           # If this is the first update to content, add to logger
           if work_content == "":
-            print(f"\n\n> Response: \n")
+            print(f"\n\n> { attempts }: Response: \n")
 
           blurb = message["content"]
           print(blurb, end='', flush=True)
@@ -84,11 +84,11 @@ def main():
         if "thinking" in message:
           print(message["thinking"], end='', flush=True)
           
-        if "content" in message:
+        elif "content" in message:
           
           # If this is the first update to content, add to logger
           if feedback_content == "":
-            print(f"\n\n> Response: \n")
+            print(f"\n\n> { attempts }: Response: \n")
 
           blurb = message["content"]
           print(blurb, end='', flush=True)
