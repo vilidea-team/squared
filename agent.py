@@ -22,7 +22,7 @@ def main():
   
   args = parser.parse_args()
 
-  working = true
+  working = True
   attempts = 0
   
   messages = [{"role": "user", "content": args.prompt}]
