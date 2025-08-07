@@ -14,6 +14,84 @@ If it does get an A+ in all 3 categories it is critical that you just return the
 """
 
 
+working = True
+attempts = 0
+
+messages = []
+
+
+def loop():
+  
+  # Our main worker starts every round of feedback
+  work_stream = ollama.chat(model=args.model, messages=messages, think=True, stream=True)
+  work_content = ""
+  work_thinking = ""
+
+  print(f"\n\n> { attempts }: Thinking... \n")
+
+  for chunk in work_stream:
+    
+    message = chunk["message"]
+    
+    if "thinking" in message:
+      print(message["thinking"], end='', flush=True)
+    
+    elif "content" in message:
+      
+      # If this is the first update to content, add to logger
+      if work_content == "":
+        print(f"\n\n> { attempts }: Response: \n")
+
+      blurb = message["content"]
+      print(blurb, end='', flush=True)
+      work_content += blurb
+
+
+  # Work round complete, add the message!
+  messages.append({"role": "assistant", "content": work_content})
+
+  print(f"\n> Beginning feedback...\n")
+
+  # Next get feedback on the work. 
+  # 1st message is the original prompt
+  # 2nd message is the work from this loop (aka the last message)
+  # 3rd message is our feedback prompt
+  feedback_stream = ollama.chat(model=args.model, messages=[
+    messages[0],
+    messages[-1],
+    {"role": "user", "content": feedback_prompt}
+  ], think=True, stream=True)
+  
+  feedback_content = ""
+
+  print(f"\n\n> { attempts }: Thinking of feedback... \n")
+  
+  for chunk in feedback_stream:
+    
+    message = chunk["message"]
+
+    if "thinking" in message:
+      print(message["thinking"], end='', flush=True)
+      
+    elif "content" in message:
+      
+      # If this is the first update to content, add to logger
+      if feedback_content == "":
+        print(f"\n\n> { attempts }: Response: \n")
+
+      blurb = message["content"]
+      print(blurb, end='', flush=True)
+      feedback_content += blurb
+
+  attempts += 1
+  
+  print(f"\n> Loop complete - total attempts: { attempts } \n")
+  
+  if feedback_content == "DONE":
+    print("\n\n> SUCCESS! A valid answer has been given\n\n")
+    working = False
+
+
 def main():
   
   parser = argparse.ArgumentParser(description="simple loop agent")
@@ -21,85 +99,8 @@ def main():
   parser.add_argument("--prompt", required=True)
   
   args = parser.parse_args()
-
-  working = True
-  attempts = 0
   
-  messages = [{"role": "user", "content": args.prompt}]
-
-
-  
-  def loop():
-    
-    # Our main worker starts every round of feedback
-    work_stream = ollama.chat(model=args.model, messages=messages, think=True, stream=True)
-    work_content = ""
-    work_thinking = ""
-
-    print(f"\n\n> { attempts }: Thinking... \n")
-
-    for chunk in work_stream:
-      
-      message = chunk["message"]
-      
-      if "thinking" in message:
-        print(message["thinking"], end='', flush=True)
-      
-      elif "content" in message:
-        
-        # If this is the first update to content, add to logger
-        if work_content == "":
-          print(f"\n\n> { attempts }: Response: \n")
-
-        blurb = message["content"]
-        print(blurb, end='', flush=True)
-        work_content += blurb
-
-
-    # Work round complete, add the message!
-    messages.append({"role": "assistant", "content": work_content})
-
-    print(f"\n> Beginning feedback...\n")
-
-    # Next get feedback on the work. 
-    # 1st message is the original prompt
-    # 2nd message is the work from this loop (aka the last message)
-    # 3rd message is our feedback prompt
-    feedback_stream = ollama.chat(model=args.model, messages=[
-      messages[0],
-      messages[-1],
-      {"role": "user", "content": feedback_prompt}
-    ], think=True, stream=True)
-    
-    feedback_content = ""
-
-    print(f"\n\n> { attempts }: Thinking of feedback... \n")
-    
-    for chunk in feedback_stream:
-      
-      message = chunk["message"]
-
-      if "thinking" in message:
-        print(message["thinking"], end='', flush=True)
-        
-      elif "content" in message:
-        
-        # If this is the first update to content, add to logger
-        if feedback_content == "":
-          print(f"\n\n> { attempts }: Response: \n")
-
-        blurb = message["content"]
-        print(blurb, end='', flush=True)
-        feedback_content += blurb
-
-    attempts += 1
-    
-    print(f"\n> Loop complete - total attempts: { attempts } \n")
-    
-    if feedback_content == "DONE":
-      print("\n\n> SUCCESS! A valid answer has been given\n\n")
-      working = False
-
+  messages.append({"role": "user", "content": args.prompt})
   
   try:
     
