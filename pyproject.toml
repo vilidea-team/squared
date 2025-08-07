@@ -9,7 +9,7 @@ description = "Squared is an agent based package that has 1 feedback loop over t
 readme = "README.md"
 requires-python = ">=3.8"
 
-dependencies = []
+dependencies = ["ollama"]
 
 [tool.setuptools]
 py-modules = ["squared", "agent"]
