@@ -39,10 +39,14 @@ def main():
       work_thinking = ""
 
       for chunk in work_stream:
+        
+        message = chunk["message"]
+        
         if "thinking" in message:
           print(message["thinking"], end='', flush=True)
+          
         if "content" in message:
-          blurb = chunk["message"]["content"]
+          blurb = message["content"]
           print(blurb, end='', flush=True)
           work_content += blurb
 
@@ -63,11 +67,15 @@ def main():
       
       feedback_content = ""
       
-      for chunk in feedback_stream:
+      for chunk in work_stream:
+        
+        message = chunk["message"]
+        
         if "thinking" in message:
           print(message["thinking"], end='', flush=True)
+          
         if "content" in message:
-          blurb = chunk["message"]["content"]
+          blurb = message["content"]
           print(blurb, end='', flush=True)
           feedback_content += blurb
 
