@@ -37,7 +37,7 @@ class Loop:
     work_content = ""
     work_thinking = ""
   
-    print(f"\n\n> { self.attempts }: Thinking... \n")
+    print(f"\n\n> { self.attempts }: Work Thinking... \n")
   
     for chunk in work_stream:
       
@@ -50,7 +50,7 @@ class Loop:
         
         # If this is the first update to content, add to logger
         if work_content == "":
-          print(f"\n\n> { self.attempts }: Response: \n")
+          print(f"\n\n> { self.attempts }: Work Response: \n")
   
         blurb = message["content"]
         print(blurb, end='', flush=True)
@@ -86,7 +86,7 @@ class Loop:
         
         # If this is the first update to content, add to logger
         if feedback_content == "":
-          print(f"\n\n> { self.attempts }: Response: \n")
+          print(f"\n\n> { self.attempts }: Feedback Response: \n")
   
         blurb = message["content"]
         print(blurb, end='', flush=True)
