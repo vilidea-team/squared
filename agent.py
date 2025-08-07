@@ -16,7 +16,6 @@ Your job is not to micromanage and try to solve the problem, it is simply to pro
 """
 
 
-
 class Loop:
   
   def __init__(self, model, prompt):
@@ -39,7 +38,7 @@ class Loop:
     work_content = ""
     work_thinking = ""
   
-    print(f"\n\n> { self.attempts }: Work Thinking... \n")
+    print(f"\n\n\033[33m> { self.attempts }: Work Thinking... \n")
   
     for chunk in work_stream:
       
@@ -52,7 +51,7 @@ class Loop:
         
         # If this is the first update to content, add to logger
         if work_content == "":
-          print(f"\n\n> { self.attempts }: Work Response: \n")
+          print(f"\n\n\033[33m> { self.attempts }: Work Response: \n")
   
         blurb = message["content"]
         print(blurb, end='', flush=True)
@@ -75,20 +74,20 @@ class Loop:
     
     feedback_content = ""
   
-    print(f"\n\n> { self.attempts }: Thinking of feedback... \n")
+    print(f"\n\n\033[33m> { self.attempts }: Thinking of feedback... \n")
     
     for chunk in feedback_stream:
       
       message = chunk["message"]
   
       if "thinking" in message:
-        print(message["thinking"], end='', flush=True)
+        print(f"\033[97m{ message["thinking"] }", end='', flush=True)
         
       elif "content" in message:
         
         # If this is the first update to content, add to logger
         if feedback_content == "":
-          print(f"\n\n> { self.attempts }: Feedback Response: \n")
+          print(f"\n\n\033[33m> { self.attempts }: Feedback Response: \n")
   
         blurb = message["content"]
         print(blurb, end='', flush=True)
@@ -98,10 +97,10 @@ class Loop:
     
     self.attempts += 1
     
-    print(f"\n> Loop complete - total attempts: { self.attempts } \n")
+    print(f"\n\n\033[33m> Loop complete - total attempts: { self.attempts } \n")
     
     if feedback_content.strip().upper() == "DONE":
-      print("\n\n> SUCCESS! A valid answer has been given\n\n")
+      print("\n\n> \033[92mSUCCESS! A valid answer has been given\n\n")
       self.working = False
   
 
